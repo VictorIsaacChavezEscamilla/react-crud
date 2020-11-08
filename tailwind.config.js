@@ -1,5 +1,3 @@
-const plugins = require("tailwind-react-ui/plugins");
-
 module.exports = {
   future: {
     // removeDeprecatedGapUtilities: true,
