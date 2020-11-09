@@ -1,15 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-//import './index.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { reducer as fromReducer } from "redux-form";
+import thunk from "redux-thunk";
+
+import * as reducers from "./reducers";
+import asyncMiddleware from "./reducers/helpers/async-middleware";
+import App from "./App";
+
 import "./tailwind.generated.css";
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+const store = createStore(
+  combineReducers({
+    ...reducers,
+    form: fromReducer
+  }),
+  applyMiddleware(thunk, asyncMiddleware)
+);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
